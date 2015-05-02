@@ -9,6 +9,9 @@
     padding: 10px;
     min-height: 800px;
     overflow-y:scroll;
+    @input-border-radius: 10px;
+    @input-border-focus: #2598f9;
+
 }
 
 .PerformerList {

@@ -181,6 +181,11 @@ var MusicianRow = React.createClass({
         musician: React.PropTypes.any.isRequired,
         showDetails: React.PropTypes.func.isRequired
     },
+    getInitialState: function(){
+        return {
+            showResults: this.props.showResults
+        }
+    },
     changeState: function(musician){
         this.props.showDetails(musician);
     },
@@ -215,9 +220,10 @@ var MusicianTable = React.createClass({
         }
     },
     showDetails: function(musician){
+
         this.setState({
-            showResults: !this.state.showResults,
-            musician: musician
+            showResults: !this.state.showResults,           //problem here for show details for a new click
+            musician: musician                              //React.unmountComponentAtNode(document.getElementById('container')
         })
     },
     saveValues: function(fields) {
@@ -250,7 +256,7 @@ var MusicianTable = React.createClass({
             }
         }.bind(this));
         this.setState({
-            musicans: x,
+            musicians: x,
             musician: musician,
             showResults: false
         });
@@ -293,6 +299,7 @@ componentDidMount: function() {                                 //csh loading th
                         musician = {musician}
                         key= {musician.performerName}
                         showDetails={this.showDetails}
+                        showResults={this.state.showResults}
                         />
                 );
             }
@@ -305,7 +312,7 @@ componentDidMount: function() {                                 //csh loading th
                 </div>
                 <div>
                     <ReactCSSTransitionGroup transitionName="example">
-                        {this.state.showResults ? <DetailsBar musician={this.state.musician}
+                        {this.state.showResults ? <DetailsBar ref="detailWindow" musician={this.state.musician}
                             handleChangedData={this.handleChangedData} saveValues={this.saveValues} />: null }
                     </ReactCSSTransitionGroup>
                 </div>
